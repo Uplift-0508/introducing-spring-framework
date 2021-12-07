@@ -33,16 +33,29 @@
             <groupId>org.apache.taglibs</groupId>
             <artifactId>taglibs-standard-jstlel</artifactId>
         </dependency>
+        <!--
+        1. 의존 라이브러리로 스프링 MVC 모듈을 지정한다. spring-webmvc 를 지정하면 스프링 웹(spring-web) 이나
+        기타 스프링 프레임워크의 의존 모듈 (spring-context 등) 에 대한 의존 관계도 함게 포함해서 처리할 수 있다.
+        -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>
                 spring-webmvc
             </artifactId>
         </dependency>
+        <!--
+        2. 의존 라이브러리로 Hibernate Validator (Bean Validation 참조 구현체) 를 지정한다. 해
+        스프링 MVC 는 Bean Validation 구조를 이용해 입력값의 유효성을 검증한다.
+        -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
         </dependency>
+        <!--
+        3. 스프링은 JCL (Apache Commons Logging) API 를 사용해 로그 출력을 한다.
+        그래서 의존 라이브러리에 JCL implemented over SLF4J (SLF4J API 에 로깅 처리를 브리지하는 JCL 구현 라이브러리) 와
+        Logback (SLF4J 구현 라이브러리) 을 설정한다.
+        -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>

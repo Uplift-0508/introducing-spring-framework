@@ -5,32 +5,61 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
     version="3.0">
 
+    <!--
+    1. 서블릿 컨테이너의 리스너 클래스로 ContextLoaderListener 를 정의한다.
+    -->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+
+    <!--
+    2. 서블릿 컨테이너의 contextClass 파라미터에 AnnotationConfigWebApplicationContext 클래스를 지정한다.
+    -->
     <context-param>
         <param-name>contextClass</param-name>
         <param-value>
             org.springframework.web.context.support.AnnotationConfigWebApplicationContext
         </param-value>
     </context-param>
+
+    <!--
+    3. 서블릿 컨테이너의 contextConfigLocation 파라미터에 작성한 설정 클래스를 지정한다.
+    -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>example.config.AppConfig</param-value>
     </context-param>
 
+    <!--
+    1. CharacterEncodingFilter 클래스를 서블릿 컨테이너에 등록한다.
+    -->
     <filter>
         <filter-name>CharacterEncodingFilter</filter-name>
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+
+        <!--
+        2. 서블릿 필터의 encoding 파라미터에 요청 파라미터의 문자 인코딩을 지정한다. 위의 예에서는 UTF-8 를 지정한다.
+        -->
         <init-param>
             <param-name>encoding</param-name>
             <param-value>UTF-8</param-value>
         </init-param>
+
+        <!--
+        3. 서블릿 필터의 forceEncoding 파라미터에 요청 및 응답의 문자 인코딩을 덮어쓰기 할지를 지정한다.
+        true 를 지정하면 요청의 문자 인코딩은 2에서 지정한 문자 인코딩으로 강제적으로 덮어쓰게 되어
+        기본 응답 문자 인코딩도 2에서 지정한 문자 인코딩이 된다.
+        -->
         <init-param>
             <param-name>forceEncoding</param-name>
             <param-value>true</param-value>
         </init-param>
     </filter>
+
+    <!--
+    4. CharacterEncodingFilter 를 적용하는 요청 URL 패턴을 지정한다.
+    위의 예에서는 웹 애플리케이션에 대한 모든 요청을 적용 대상으로 삼는다.
+    -->
     <filter-mapping>
         <filter-name>CharacterEncodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
@@ -38,13 +67,25 @@
 
     <servlet>
         <servlet-name>app</servlet-name>
+
+        <!--
+        1. DispatcherServlet 클래스를 서블릿 컨테이너에 등록한다.
+        -->
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+
+        <!--
+        2. 서블릿 contextClass 파라미터에 AnnotationConfigWebApplicationContext 클래스를 지정한다.
+        -->
         <init-param>
             <param-name>contextClass</param-name>
             <param-value>
                 org.springframework.web.context.support.AnnotationConfigWebApplicationContext
             </param-value>
         </init-param>
+
+        <!--
+        3. 서블릿 contextConfigLocation 파라미터에 작성한 설정 클래스를 지정한다.
+        -->
         <init-param>
             <param-name>contextConfigLocation</param-name>
             <param-value>example.config.WebMvcConfig</param-value>
@@ -52,6 +93,10 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
 
+    <!--
+    4. 1에서 정의한 DispatcherServlet 을 사용해 요청을 처리하는 URL 패턴을 설정한다.
+    이 예에서는 웹 애플리케이션에 대한 모든 요청을 1에서 정의한 DispatcherServlet 을 통해 처리하도록 설정돼 있다.
+    -->
     <servlet-mapping>
         <servlet-name>app</servlet-name>
         <url-pattern>/</url-pattern>
@@ -61,6 +106,10 @@
         <jsp-property-group>
             <url-pattern>*.jsp</url-pattern>
             <page-encoding>UTF-8</page-encoding>
+
+            <!--
+            1. 모든 JSP 에 인클루드된다.
+            -->
             <include-prelude>/WEB-INF/include.jsp</include-prelude>
         </jsp-property-group>
     </jsp-config>
